@@ -16,8 +16,17 @@ public class PlayerMovement : MonoBehaviour
     public GameObject playerObject;
     public GameObject laserBeam;
 
+    public float jumpHeight;
+    public float jumpSpeed;
+
     private float inputX;
     private float inputY;
+    private float jump;
+
+    private bool isJumping;
+    private float currentJumpHeight;
+    private float jumpTime;
+    private float jumpLength;
 
     private float xPos;
     private float yPos;
@@ -38,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
         depthScript = depthCoordinator.GetComponent<ObjectDepth>();
         depth = 0.5f;
         initialScale = transform.localScale.x;
+        currentJumpHeight = 0.0f;
+        isJumping = false;
+        jumpLength = Mathf.PI / jumpSpeed;
     }
 
     // Update is called once per frame
@@ -49,6 +61,24 @@ public class PlayerMovement : MonoBehaviour
     void MovePlayer() {
         inputX = Input.GetAxis("Horizontal");
         inputY = Input.GetAxis("Vertical");
+
+        jump = Input.GetAxis("Jump");
+
+        float now = Time.time;
+
+        if (!isJumping && jump > 0.0f) {
+            isJumping = true;
+            jumpTime = now;
+        }
+        else if (isJumping) {
+            if ((now - jumpTime) < jumpLength) {
+                currentJumpHeight = jumpHeight * Mathf.Sin(jumpSpeed * (Time.time - jumpTime));
+            }
+            else {
+                currentJumpHeight = 0.0f;
+                isJumping = false;
+            }
+        }
 
         bool isMoving = false;
 
@@ -67,10 +97,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         animator.SetBool("isMoving", isMoving);
+        animator.SetBool("isJumping", isJumping);
 
         xPos = xPos + inputX * playerSpeedX;
         depth = Mathf.Max(Mathf.Min(depth + inputY * playerSpeedY, 1), 0);
         yPos = depthScript.updateY(gameObject, depth);
+
+        transform.localPosition = new Vector2(0, currentJumpHeight);
 
         playerObject.transform.position = new Vector2(xPos, yPos);
     }

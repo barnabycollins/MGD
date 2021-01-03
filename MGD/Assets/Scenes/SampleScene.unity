@@ -512,6 +512,8 @@ MonoBehaviour:
   depthCoordinator: {fileID: 1256033929}
   playerObject: {fileID: 1479866204}
   laserBeam: {fileID: 136382082}
+  jumpHeight: 3
+  jumpSpeed: 5
 --- !u!95 &1177313921
 Animator:
   serializedVersion: 3
