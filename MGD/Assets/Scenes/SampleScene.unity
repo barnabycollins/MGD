@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   topY: 0
-  bottomY: 0
+  bottomY: -3.7
 --- !u!4 &1256033931
 Transform:
   m_ObjectHideFlags: 0
@@ -575,10 +575,62 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1410720360}
   - {fileID: 1479866205}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1410720359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1410720360}
+  - component: {fileID: 1410720361}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1410720360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410720359}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1256033931}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1410720361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410720359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c682d265f25577478b7490720a34e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySprites:
+  - {fileID: -6890755385435835810, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
+  - {fileID: 4509040943559981958, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
+  - {fileID: -7235964783596328841, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
+  enemyPrefab: {fileID: 7868647120333649928, guid: fa61a67f2c44a194888e6be848ca24fa,
+    type: 3}
+  enemyLikelihood: 0.001
+  depthCoordinator: {fileID: 1256033929}
 --- !u!1 &1479866204
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +661,7 @@ Transform:
   - {fileID: 1177313918}
   - {fileID: 83331077}
   m_Father: {fileID: 1256033931}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2015046350
 GameObject:

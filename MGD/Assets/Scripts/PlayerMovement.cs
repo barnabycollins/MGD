@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator animator;
+    private SpriteRenderer laserBeamRenderer;
 
     private ObjectDepth depthScript;
 
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         currentJumpHeight = 0.0f;
         isJumping = false;
         jumpLength = Mathf.PI / jumpSpeed;
+        laserBeamRenderer = laserBeam.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -104,6 +106,9 @@ public class PlayerMovement : MonoBehaviour
         yPos = depthScript.updateY(gameObject, depth);
 
         transform.localPosition = new Vector2(0, currentJumpHeight);
+
+        sr.sortingOrder = depthScript.depthToLayerOrder(depth);
+        laserBeamRenderer.sortingOrder = depthScript.depthToLayerOrder(depth) - 1;
 
         playerObject.transform.position = new Vector2(xPos, yPos);
     }

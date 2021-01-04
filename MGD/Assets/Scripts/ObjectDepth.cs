@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class ObjectDepth : MonoBehaviour
 {
-    public float topY;
-    public float bottomY;
+    public float topY = 0.0f;
+    public float bottomY = -3.7f;
 
     private IDictionary<GameObject, float> objectLocations;
 
     private void Start() {
-        topY = 0.0f;
-        bottomY = -3.7f;
         objectLocations = new Dictionary<GameObject, float>();
     }
 
@@ -37,5 +35,9 @@ public class ObjectDepth : MonoBehaviour
 
     public float yToDepth(float y) {
         return (y - bottomY) / (topY - bottomY);
+    }
+
+    public int depthToLayerOrder(float depth) {
+        return 100 - Mathf.RoundToInt(depth * 100);
     }
 }
