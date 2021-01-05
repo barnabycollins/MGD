@@ -564,6 +564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topY: 0
   bottomY: -3.7
+  raycastTolerance: 0.05
 --- !u!4 &1256033931
 Transform:
   m_ObjectHideFlags: 0
@@ -623,14 +624,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c682d265f25577478b7490720a34e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyLikelihood: 0.01
+  enemyPrefab: {fileID: 7868647120333649928, guid: fa61a67f2c44a194888e6be848ca24fa,
+    type: 3}
   enemySprites:
   - {fileID: -6890755385435835810, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
   - {fileID: 4509040943559981958, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
   - {fileID: -7235964783596328841, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
-  enemyPrefab: {fileID: 7868647120333649928, guid: fa61a67f2c44a194888e6be848ca24fa,
-    type: 3}
-  enemyLikelihood: 0.001
   depthCoordinator: {fileID: 1256033929}
+  enemyDeathTime: 0.2
 --- !u!1 &1479866204
 GameObject:
   m_ObjectHideFlags: 0

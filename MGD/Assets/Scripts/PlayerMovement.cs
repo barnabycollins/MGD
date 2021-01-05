@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float jump;
 
     private bool isJumping;
+    private bool facingRight;
     private float currentJumpHeight;
     private float jumpTime;
     private float jumpLength;
@@ -86,10 +87,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (inputX > 0.0f) {
             transform.localScale = new Vector2(initialScale, initialScale);
+            facingRight = true;
             isMoving = true;
         }
         else if (inputX < 0.0f) {
             transform.localScale = new Vector2(-initialScale, initialScale);
+            facingRight = false;
             isMoving = true;
         }
 
@@ -117,6 +120,19 @@ public class PlayerMovement : MonoBehaviour
         float fireInput = Input.GetAxis("Fire1");
 
         bool firing = fireInput != 0.0f;
+
+        if (firing) {
+            List<GameObject> objectsAtDepth = depthScript.findItemsWithDepth(depth);
+
+            foreach (GameObject enemy in objectsAtDepth) {
+                float enemyX = enemy.transform.position.x;
+                if (enemy != gameObject) {
+                    if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
+                        enemy.GetComponent<EnemyControl>().Die();
+                    }
+                }
+            }
+        }
 
         laserBeam.SetActive(firing);
     }

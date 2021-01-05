@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
+  m_Name: InspectorWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -476,16 +476,16 @@ MonoBehaviour:
   m_ShowContextualTools: 0
   m_WindowGUID: ad831bddf647d184bb139101c4c5a91c
   m_Gizmos: 1
-  m_SceneIsLit: 0
+  m_SceneIsLit: 1
   m_SceneLighting: 1
   m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.3252784, y: -0.27431256, z: -10.472999}
+    m_Target: {x: -0.023326874, y: -0.64727336, z: -12.49707}
     speed: 2
-    m_Value: {x: 1.3252784, y: -0.27431256, z: -10.472999}
+    m_Value: {x: -0.023326874, y: -0.64727336, z: -12.49707}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -535,9 +535,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 3.9638035
+    m_Target: 7.090318
     speed: 2
-    m_Value: 3.9638035
+    m_Value: 7.090318
   m_Ortho:
     m_Target: 1
     speed: 2

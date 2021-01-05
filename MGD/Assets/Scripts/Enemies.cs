@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-
-    public Sprite[] enemySprites;
-    private int numSprites;
-
-    public GameObject enemyPrefab;
-
     public float enemyLikelihood;
 
     private List<GameObject> enemies;
 
+    public GameObject enemyPrefab;
+
+    public Sprite[] enemySprites;
+    private int numSprites;
+
     public GameObject depthCoordinator;
+    public float enemyDeathTime;
 
     // Start is called before the first frame update
     void Start() {
@@ -22,8 +22,7 @@ public class Enemies : MonoBehaviour
         numSprites = enemySprites.Length;
     }
 
-    // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (Random.value < enemyLikelihood) {
             GameObject newEnemy = Instantiate(enemyPrefab, transform);
             enemies.Add(newEnemy);
@@ -35,6 +34,7 @@ public class Enemies : MonoBehaviour
             EnemyControl controlScript = newEnemy.GetComponent<EnemyControl>();
             controlScript.depth = Random.value;
             controlScript.depthCoordinator = depthCoordinator;
+            controlScript.deathTime = enemyDeathTime;
 
             // Activate enemy
             newEnemy.SetActive(true);

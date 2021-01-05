@@ -6,6 +6,7 @@ public class ObjectDepth : MonoBehaviour
 {
     public float topY = 0.0f;
     public float bottomY = -3.7f;
+    public float raycastTolerance;
 
     private IDictionary<GameObject, float> objectLocations;
 
@@ -39,5 +40,21 @@ public class ObjectDepth : MonoBehaviour
 
     public int depthToLayerOrder(float depth) {
         return 100 - Mathf.RoundToInt(depth * 100);
+    }
+
+    public void remove(GameObject caller) {
+        objectLocations.Remove(caller);
+    }
+
+    public List<GameObject> findItemsWithDepth(float depth) {
+        List<GameObject> objects = new List<GameObject>();
+
+        foreach (KeyValuePair<GameObject, float> kvp in objectLocations) {
+            if (Mathf.Abs(depth - kvp.Value) < raycastTolerance) {
+                objects.Add(kvp.Key);
+            }
+        }
+        
+        return objects;
     }
 }
