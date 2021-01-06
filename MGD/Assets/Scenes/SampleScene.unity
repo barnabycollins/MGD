@@ -398,8 +398,9 @@ GameObject:
   - component: {fileID: 1177313918}
   - component: {fileID: 1177313917}
   - component: {fileID: 1177313920}
-  - component: {fileID: 1177313919}
   - component: {fileID: 1177313921}
+  - component: {fileID: 1177313919}
+  - component: {fileID: 1177313922}
   m_Layer: 0
   m_Name: hero
   m_TagString: Untagged
@@ -472,27 +473,22 @@ Transform:
   m_Father: {fileID: 1479866205}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &1177313919
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!70 &1177313919
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177313916}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_Enabled: 1
+  m_Density: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.56}
+  m_Size: {x: 1.92, y: 3.29}
+  m_Direction: 0
 --- !u!114 &1177313920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,8 +503,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeedX: 0.05
   playerSpeedY: 0.003
-  yUpper: 0
-  yLower: -3.8
   depthCoordinator: {fileID: 1256033929}
   playerObject: {fileID: 1479866204}
   laserBeam: {fileID: 136382082}
@@ -533,6 +527,27 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!50 &1177313922
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177313916}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1256033929
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,12 +642,16 @@ MonoBehaviour:
   enemyLikelihood: 0.01
   enemyPrefab: {fileID: 7868647120333649928, guid: fa61a67f2c44a194888e6be848ca24fa,
     type: 3}
+  mainCamera: {fileID: 519420031}
   enemySprites:
   - {fileID: -6890755385435835810, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
   - {fileID: 4509040943559981958, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
   - {fileID: -7235964783596328841, guid: 4c10481179174d445b3621c9d2276b96, type: 3}
   depthCoordinator: {fileID: 1256033929}
   enemyDeathTime: 0.2
+  minRollSpeed: 1
+  maxRollSpeed: 2
+  enemyRadius: 0.56
 --- !u!1 &1479866204
 GameObject:
   m_ObjectHideFlags: 0

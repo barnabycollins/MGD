@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public float playerSpeedX = 0.2f;
     public float playerSpeedY = 0.2f;
-
-    public float yUpper;
-    public float yLower;
 
     public GameObject depthCoordinator;
     public GameObject playerObject;
@@ -32,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     private float xPos;
     private float yPos;
 
-    private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator animator;
     private SpriteRenderer laserBeamRenderer;
@@ -43,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     private float initialScale;
 
     void Start() {
-        rb = gameObject.GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         depthScript = depthCoordinator.GetComponent<ObjectDepth>();
@@ -59,6 +52,11 @@ public class PlayerMovement : MonoBehaviour
     void Update() {
         MovePlayer();
         checkShoot();
+    }
+
+    // TODO this doesn't work
+    void onTriggerEnter2D(Collider collider) {
+        Destroy(gameObject);
     }
 
     void MovePlayer() {
