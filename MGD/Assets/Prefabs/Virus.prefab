@@ -211,6 +211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   depth: 0
   rollSpeed: 0
+  depthOffset: 0
   mainCamera: {fileID: 0}
   depthCoordinator: {fileID: 0}
   deathTime: 0

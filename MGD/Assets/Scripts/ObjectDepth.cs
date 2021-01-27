@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObjectDepth : MonoBehaviour
 {
-    public float topY = 0.0f;
-    public float bottomY = -3.7f;
+    public float topY;
+    public float bottomY;
     public float raycastTolerance;
 
     private IDictionary<GameObject, float> objectLocations;

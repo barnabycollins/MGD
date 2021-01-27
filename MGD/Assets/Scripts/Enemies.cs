@@ -21,7 +21,7 @@ public class Enemies : MonoBehaviour
     public float minRollSpeed;
     public float maxRollSpeed;
 
-    public float enemyRadius = 0.56f;
+    public float enemyRadius;
     private float enemyCircumference;
 
     // Start is called before the first frame update
@@ -48,6 +48,7 @@ public class Enemies : MonoBehaviour
             controlScript.mainCamera = mainCamera;
             controlScript.rollSpeed = Random.Range(minRollSpeed, maxRollSpeed);
             controlScript.circumference = enemyCircumference;
+            controlScript.depthOffset = enemyRadius;
 
             // Activate enemy
             newEnemy.SetActive(true);

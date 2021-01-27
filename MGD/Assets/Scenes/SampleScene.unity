@@ -501,10 +501,13 @@ MonoBehaviour:
   playerSpeedX: 0.04
   playerSpeedY: 0.003
   depthCoordinator: {fileID: 1256033929}
+  depthOffset: 0.8
   playerObject: {fileID: 1479866204}
   laserBeam: {fileID: 136382082}
   jumpHeight: 3
   jumpSpeed: 5
+  hitboxX: 1
+  hitboxJumpHeight: 1
 --- !u!95 &1177313921
 Animator:
   serializedVersion: 3
@@ -553,8 +556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06030ac7378c7c34a818d6817e3bac17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topY: 0
-  bottomY: -3.7
+  topY: -0.8
+  bottomY: -4.5
   raycastTolerance: 0.05
 --- !u!4 &1256033931
 Transform:
@@ -615,7 +618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c682d265f25577478b7490720a34e44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyLikelihood: 0.01
+  enemyLikelihood: 0.03
   enemyPrefab: {fileID: 7868647120333649928, guid: fa61a67f2c44a194888e6be848ca24fa,
     type: 3}
   mainCamera: {fileID: 519420031}

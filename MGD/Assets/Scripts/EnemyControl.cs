@@ -9,6 +9,7 @@ public class EnemyControl : MonoBehaviour
     private float initialX;
     private float startScale;
     public float rollSpeed;
+    public float depthOffset;
 
     public Camera mainCamera;
 
@@ -29,7 +30,7 @@ public class EnemyControl : MonoBehaviour
     void Start() {
         depthScript = depthCoordinator.GetComponent<ObjectDepth>();
 
-        posY = depthScript.updateY(gameObject, depth);
+        posY = depthScript.updateY(gameObject, depth) + depthOffset;
         initialX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x + worldEdgeMargin;
 
         sprite.GetComponent<SpriteRenderer>().sortingOrder = depthScript.depthToLayerOrder(depth);

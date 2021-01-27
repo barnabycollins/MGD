@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float playerSpeedX = 0.2f;
-    public float playerSpeedY = 0.2f;
+    public float playerSpeedX;
+    public float playerSpeedY;
 
     public GameObject depthCoordinator;
+    public float depthOffset;
     public GameObject playerObject;
     public GameObject laserBeam;
 
     public float jumpHeight;
     public float jumpSpeed;
+
+    public float hitboxX;
+    public float hitboxJumpHeight;
 
     private float inputX;
     private float inputY;
@@ -20,6 +24,7 @@ public class Player : MonoBehaviour
 
     private bool isJumping;
     private bool facingRight;
+    private bool firingNow;
     private float currentJumpHeight;
     private float jumpTime;
     private float jumpLength;
@@ -32,6 +37,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer laserBeamRenderer;
 
     private ObjectDepth depthScript;
+    private List<GameObject> objectsAtDepth;
 
     private float depth;
     private float initialScale;
@@ -51,12 +57,27 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update() {
         MovePlayer();
-        checkShoot();
     }
 
-    // TODO this doesn't work
-    void onTriggerEnter2D(Collider collider) {
-        Destroy(gameObject);
+    void LateUpdate() {
+        checkShoot();
+        if (currentJumpHeight < hitboxJumpHeight) {
+            objectsAtDepth = depthScript.findItemsWithDepth(depth);
+            foreach (GameObject enemy in objectsAtDepth) {
+                float enemyX = enemy.transform.position.x;
+                if (enemy != gameObject) {
+                    if (firingNow) {
+                        if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
+                            enemy.GetComponent<EnemyControl>().Die();
+                        }
+                    }
+
+                    if (Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
+                        Debug.Log("ouch");
+                    }
+                }
+            }
+        }
     }
 
     void MovePlayer() {
@@ -104,7 +125,7 @@ public class Player : MonoBehaviour
 
         xPos = xPos + inputX * playerSpeedX;
         depth = Mathf.Max(Mathf.Min(depth + inputY * playerSpeedY, 1), 0);
-        yPos = depthScript.updateY(gameObject, depth);
+        yPos = depthScript.updateY(gameObject, depth) + depthOffset;
 
         transform.localPosition = new Vector2(0, currentJumpHeight);
 
@@ -117,21 +138,8 @@ public class Player : MonoBehaviour
     void checkShoot() {
         float fireInput = Input.GetAxis("Fire1");
 
-        bool firing = fireInput != 0.0f;
+        firingNow = fireInput != 0.0f;
 
-        if (firing) {
-            List<GameObject> objectsAtDepth = depthScript.findItemsWithDepth(depth);
-
-            foreach (GameObject enemy in objectsAtDepth) {
-                float enemyX = enemy.transform.position.x;
-                if (enemy != gameObject) {
-                    if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
-                        enemy.GetComponent<EnemyControl>().Die();
-                    }
-                }
-            }
-        }
-
-        laserBeam.SetActive(firing);
+        laserBeam.SetActive(firingNow);
     }
 }
