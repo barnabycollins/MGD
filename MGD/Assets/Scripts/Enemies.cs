@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Enemies : MonoBehaviour
 {
-    public float enemyLikelihood;
+    public float[] enemyLikelihoods;
+    public GameObject gameController;
+    private GameControlScript mainControlScript;
 
     private List<GameObject> enemies;
 
@@ -29,9 +31,12 @@ public class Enemies : MonoBehaviour
         enemies = new List<GameObject>();
         numSprites = enemySprites.Length;
         enemyCircumference = 2 * Mathf.PI * enemyRadius;
+        mainControlScript = gameController.GetComponent<GameControlScript>();
     }
 
     void FixedUpdate() {
+        float enemyLikelihood = Mathf.Lerp(enemyLikelihoods[0], enemyLikelihoods[1], mainControlScript.levelProgress);
+
         if (Random.value < enemyLikelihood) {
             GameObject newEnemy = Instantiate(enemyPrefab, transform);
             enemies.Add(newEnemy);
