@@ -45,6 +45,16 @@ public class EnemyControl : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
+        if (dead) {
+            float timeUntilRemoval = deathTime - (Time.time - timeOfDeath);
+            transform.localScale = timeUntilRemoval / deathTime * startScale * new Vector2(1, 1);
+            if (timeUntilRemoval <= 0) {
+                RemoveSelf();
+            }
+        }
+    }
+
+    void FixedUpdate() {
         if (mainCamera.WorldToViewportPoint(new Vector3(transform.position.x + worldEdgeMargin, transform.position.y, transform.position.z)).x < 0) {
             RemoveSelf();
         }
@@ -53,13 +63,6 @@ public class EnemyControl : MonoBehaviour
             transform.position = new Vector2(posX, posY);
 
             sprite.transform.localRotation = Quaternion.Euler(Vector3.forward * (initialX - posX) * 360 / circumference);
-        }
-        if (dead) {
-            float timeUntilRemoval = deathTime - (Time.time - timeOfDeath);
-            transform.localScale = timeUntilRemoval / deathTime * startScale * new Vector2(1, 1);
-            if (timeUntilRemoval <= 0) {
-                RemoveSelf();
-            }
         }
     }
 

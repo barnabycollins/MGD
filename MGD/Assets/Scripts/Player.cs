@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public float hitboxX;
     public float hitboxJumpHeight;
 
+    public GameObject gameController;
+
     private float inputX;
     private float inputY;
     private float jump;
@@ -42,6 +44,9 @@ public class Player : MonoBehaviour
     private float depth;
     private float initialScale;
 
+    private GameControlScript gameControl;
+    private float levelLength;
+
     void Start() {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -52,10 +57,13 @@ public class Player : MonoBehaviour
         isJumping = false;
         jumpLength = Mathf.PI / jumpSpeed;
         laserBeamRenderer = laserBeam.GetComponent<SpriteRenderer>();
+        gameControl = gameController.GetComponent<GameControlScript>();
+        levelLength = gameControl.levelLength;
+        
     }
 
     // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         MovePlayer();
     }
 
@@ -73,7 +81,7 @@ public class Player : MonoBehaviour
                     }
 
                     if (Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
-                        Debug.Log("ouch");
+                        gameControl.updateHealth(-2);
                     }
                 }
             }
@@ -123,7 +131,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isMoving", isMoving);
         animator.SetBool("isJumping", isJumping);
 
-        xPos = xPos + inputX * playerSpeedX;
+        xPos = Mathf.Min(Mathf.Max(-22, xPos + inputX * playerSpeedX), levelLength + 11);
         depth = Mathf.Max(Mathf.Min(depth + inputY * playerSpeedY, 1), 0);
         yPos = depthScript.updateY(gameObject, depth) + depthOffset;
 
