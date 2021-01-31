@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
             objectsAtDepth = depthScript.findItemsWithDepth(depth);
             foreach (GameObject enemy in objectsAtDepth) {
                 float enemyX = enemy.transform.position.x;
-                if (enemy != gameObject) {
+                if (enemy.name == "Virus(Clone)") {
                     if (firingNow) {
                         if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
                             enemy.GetComponent<EnemyControl>().Die();
@@ -81,8 +81,15 @@ public class Player : MonoBehaviour
                     }
 
                     if (Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
-                        gameControl.updateHealth(-2);
+                        bool isAlive = gameControl.updateHealth(-2);
+
+                        if (!isAlive) {
+                            Debug.Log("dead ah jeez");
+                        }
                     }
+                }
+                else if (enemy.name == "Glasses" && Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
+                    Debug.Log("EPIC WIN BRUDDA");
                 }
             }
         }

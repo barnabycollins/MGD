@@ -14,14 +14,24 @@ public class GameControlScript : MonoBehaviour
     public GameObject healthBar;
     private Slider healthSlider;
 
+    public GameObject weaponBar;
+    private Slider weaponSlider;
+
+    public GameObject distanceBar;
+    private Slider distanceSlider;
+
     public int playerHealth;
 
     // Start is called before the first frame update
     void Start()
     {
         levelProgress = 0;
+
         healthSlider = healthBar.GetComponent<Slider>();
         healthSlider.value = healthSlider.maxValue = playerHealth;
+
+        distanceSlider = distanceBar.GetComponent<Slider>();
+        distanceSlider.value = 0;
     }
 
     // Update is called once per frame
@@ -31,15 +41,19 @@ public class GameControlScript : MonoBehaviour
     }
 
     void updateProgress() {
-        levelProgress = Mathf.Min(Mathf.Max(0.0f, player.transform.position.x), levelLength) / levelLength;
+        levelProgress = Mathf.Min(Mathf.Max(0.0f, player.transform.position.x / levelLength), 1.0f);
+
+        distanceSlider.value = levelProgress;
     }
 
     public bool updateHealth(int damage) {
         playerHealth += damage;
 
+        playerHealth = Mathf.Max(0, playerHealth);
+
         healthSlider.value = playerHealth;
 
-        if (playerHealth <= 0) return false;
+        if (playerHealth == 0) return false;
 
         return true;
     }
