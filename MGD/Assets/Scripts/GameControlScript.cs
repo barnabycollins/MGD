@@ -30,6 +30,9 @@ public class GameControlScript : MonoBehaviour
         healthSlider = healthBar.GetComponent<Slider>();
         healthSlider.value = healthSlider.maxValue = playerHealth;
 
+        weaponSlider = weaponBar.GetComponent<Slider>();
+        weaponSlider.value = 1;
+
         distanceSlider = distanceBar.GetComponent<Slider>();
         distanceSlider.value = 0;
     }
@@ -56,5 +59,9 @@ public class GameControlScript : MonoBehaviour
         if (playerHealth == 0) return false;
 
         return true;
+    }
+
+    public void updateFireCooldown(float proportionOfTime) {
+        weaponSlider.value = proportionOfTime;
     }
 }

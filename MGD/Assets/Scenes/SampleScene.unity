@@ -1411,9 +1411,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 5000
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 5000
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1707,6 +1707,8 @@ MonoBehaviour:
   hitboxX: 1
   hitboxJumpHeight: 1
   gameController: {fileID: 461378889}
+  fireCooldown: 1
+  shotLength: 0.2
 --- !u!95 &1177313921
 Animator:
   serializedVersion: 3

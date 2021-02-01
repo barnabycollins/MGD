@@ -20,6 +20,10 @@ public class Player : MonoBehaviour
 
     public GameObject gameController;
 
+    public float fireCooldown;
+    public float shotLength;
+    private float lastFireTime;
+
     private float inputX;
     private float inputY;
     private float jump;
@@ -59,7 +63,8 @@ public class Player : MonoBehaviour
         laserBeamRenderer = laserBeam.GetComponent<SpriteRenderer>();
         gameControl = gameController.GetComponent<GameControlScript>();
         levelLength = gameControl.levelLength;
-        
+
+        lastFireTime = -100;        
     }
 
     // Update is called once per frame
@@ -69,30 +74,7 @@ public class Player : MonoBehaviour
 
     void LateUpdate() {
         checkShoot();
-        if (currentJumpHeight < hitboxJumpHeight) {
-            objectsAtDepth = depthScript.findItemsWithDepth(depth);
-            foreach (GameObject enemy in objectsAtDepth) {
-                float enemyX = enemy.transform.position.x;
-                if (enemy.name == "Virus(Clone)") {
-                    if (firingNow) {
-                        if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
-                            enemy.GetComponent<EnemyControl>().Die();
-                        }
-                    }
-
-                    if (Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
-                        bool isAlive = gameControl.updateHealth(-2);
-
-                        if (!isAlive) {
-                            Debug.Log("dead ah jeez");
-                        }
-                    }
-                }
-                else if (enemy.name == "Glasses" && Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
-                    Debug.Log("EPIC WIN BRUDDA");
-                }
-            }
-        }
+        checkCollisions();
     }
 
     void MovePlayer() {
@@ -153,8 +135,46 @@ public class Player : MonoBehaviour
     void checkShoot() {
         float fireInput = Input.GetAxis("Fire1");
 
-        firingNow = fireInput != 0.0f;
-
+        float timeNow = Time.time;
+        float timeSinceFiring = timeNow - lastFireTime;
+        
+        if (timeSinceFiring > shotLength) {
+            if (fireInput != 0.0f && timeSinceFiring > fireCooldown) {
+                lastFireTime = timeNow;
+                firingNow = true;
+            }
+            else {
+                firingNow = false;
+            }
+        }
+        gameControl.updateFireCooldown(Mathf.Min(timeSinceFiring/fireCooldown));
         laserBeam.SetActive(firingNow);
+    }
+
+    void checkCollisions() {
+        if (currentJumpHeight < hitboxJumpHeight) {
+            objectsAtDepth = depthScript.findItemsWithDepth(depth);
+            foreach (GameObject enemy in objectsAtDepth) {
+                float enemyX = enemy.transform.position.x;
+                if (enemy.name == "Virus(Clone)") {
+                    if (firingNow) {
+                        if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
+                            enemy.GetComponent<EnemyControl>().Die();
+                        }
+                    }
+
+                    if (Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
+                        bool isAlive = gameControl.updateHealth(-2);
+
+                        if (!isAlive) {
+                            Debug.Log("dead ah jeez");
+                        }
+                    }
+                }
+                else if (enemy.name == "Glasses" && Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
+                    Debug.Log("EPIC WIN BRUDDA");
+                }
+            }
+        }
     }
 }
