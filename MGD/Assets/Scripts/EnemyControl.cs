@@ -49,14 +49,15 @@ public class EnemyControl : MonoBehaviour
             float timeUntilRemoval = deathTime - (Time.time - timeOfDeath);
             transform.localScale = timeUntilRemoval / deathTime * startScale * new Vector2(1, 1);
             if (timeUntilRemoval <= 0) {
-                RemoveSelf();
+                Destroy(gameObject);
             }
         }
     }
 
     void FixedUpdate() {
         if (mainCamera.WorldToViewportPoint(new Vector3(transform.position.x + worldEdgeMargin, transform.position.y, transform.position.z)).x < 0) {
-            RemoveSelf();
+            depthScript.remove(gameObject);
+            Destroy(gameObject);
         }
         else {
             float posX = initialX - rollSpeed * (Time.time - spawnTime);
@@ -66,12 +67,8 @@ public class EnemyControl : MonoBehaviour
         }
     }
 
-    void RemoveSelf() {
-        depthScript.remove(gameObject);
-        Destroy(gameObject);
-    }
-
     public void Die() {
+        depthScript.remove(gameObject);
         if (!dead) {
             dead = true;
             timeOfDeath = Time.time;

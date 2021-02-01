@@ -51,6 +51,11 @@ public class Player : MonoBehaviour
     private GameControlScript gameControl;
     private float levelLength;
 
+    private int enemiesKilled = 0;
+    private int weaponFires = 0;
+    private float startTime;
+    private float endTime;
+
     void Start() {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -64,7 +69,8 @@ public class Player : MonoBehaviour
         gameControl = gameController.GetComponent<GameControlScript>();
         levelLength = gameControl.levelLength;
 
-        lastFireTime = -100;        
+        lastFireTime = -100;
+        startTime = Time.time;
     }
 
     // Update is called once per frame
@@ -141,6 +147,7 @@ public class Player : MonoBehaviour
         if (timeSinceFiring > shotLength) {
             if (fireInput != 0.0f && timeSinceFiring > fireCooldown) {
                 lastFireTime = timeNow;
+                weaponFires += 1;
                 firingNow = true;
             }
             else {
@@ -158,8 +165,9 @@ public class Player : MonoBehaviour
                 float enemyX = enemy.transform.position.x;
                 if (enemy.name == "Virus(Clone)") {
                     if (firingNow) {
-                        if ((facingRight && enemyX > transform.position.x) || !facingRight && enemyX < transform.position.x) {
+                        if ((facingRight && enemyX > transform.position.x + hitboxX) || !facingRight && enemyX < transform.position.x - hitboxX) {
                             enemy.GetComponent<EnemyControl>().Die();
+                            enemiesKilled += 1;
                         }
                     }
 
@@ -167,14 +175,28 @@ public class Player : MonoBehaviour
                         bool isAlive = gameControl.updateHealth(-2);
 
                         if (!isAlive) {
+                            endTime = Time.time;
                             Debug.Log("dead ah jeez");
                         }
                     }
                 }
                 else if (enemy.name == "Glasses" && Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
+                    endTime = Time.time;
                     Debug.Log("EPIC WIN BRUDDA");
+
+                    Debug.Log(getStats()["timeTaken"]);
                 }
             }
         }
+    }
+
+    public IDictionary<string, float> getStats() {
+        IDictionary<string, float> dict = new Dictionary<string, float>(){
+            {"weaponFires", (float) weaponFires},
+            {"enemiesKilled", (float) enemiesKilled},
+            {"timeTaken", endTime - startTime}
+        };
+
+        return dict;
     }
 }
