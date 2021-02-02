@@ -22,6 +22,8 @@ public class GameControlScript : MonoBehaviour
 
     public int playerHealth;
 
+    public string gameState;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,8 @@ public class GameControlScript : MonoBehaviour
 
         distanceSlider = distanceBar.GetComponent<Slider>();
         distanceSlider.value = 0;
+
+        gameState = "running";
     }
 
     // Update is called once per frame
@@ -63,5 +67,14 @@ public class GameControlScript : MonoBehaviour
 
     public void updateFireCooldown(float proportionOfTime) {
         weaponSlider.value = proportionOfTime;
+    }
+
+    public void end(bool won, IDictionary<string, float> stats) {
+        if (won) {
+            gameState = "win";
+        }
+        else {
+            gameState = "lose";
+        }
     }
 }

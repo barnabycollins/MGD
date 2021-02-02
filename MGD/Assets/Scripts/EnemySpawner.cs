@@ -18,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
     private int numSprites;
 
     public GameObject depthCoordinator;
+    private ObjectDepth depthScript;
+
     public float enemyDeathTime;
 
     public float minRollSpeed;
@@ -32,31 +34,35 @@ public class EnemySpawner : MonoBehaviour
         numSprites = enemySprites.Length;
         enemyCircumference = 2 * Mathf.PI * enemyRadius;
         mainControlScript = gameController.GetComponent<GameControlScript>();
+        depthScript = depthCoordinator.GetComponent<ObjectDepth>();
     }
 
     void FixedUpdate() {
-        float enemyLikelihood = Mathf.Lerp(enemyLikelihoods[0], enemyLikelihoods[1], mainControlScript.levelProgress);
+        if (mainControlScript.gameState != "win") {
+            float enemyLikelihood = Mathf.Lerp(enemyLikelihoods[0], enemyLikelihoods[1], mainControlScript.levelProgress);
 
-        if (Random.value < enemyLikelihood) {
-            GameObject newEnemy = Instantiate(enemyPrefab, transform);
-            enemies.Add(newEnemy);
-            
-            EnemyControl controlScript = newEnemy.GetComponent<EnemyControl>();
+            if (Random.value < enemyLikelihood) {
+                GameObject newEnemy = Instantiate(enemyPrefab, transform);
+                enemies.Add(newEnemy);
+                
+                EnemyControl controlScript = newEnemy.GetComponent<EnemyControl>();
 
-            // Configure enemy before activating
-            SpriteRenderer sr = controlScript.sprite.GetComponent<SpriteRenderer>();
-            sr.sprite = enemySprites[Random.Range(0, numSprites)];
+                // Configure enemy before activating
+                SpriteRenderer sr = controlScript.sprite.GetComponent<SpriteRenderer>();
+                sr.sprite = enemySprites[Random.Range(0, numSprites)];
 
-            controlScript.depth = Random.value;
-            controlScript.depthCoordinator = depthCoordinator;
-            controlScript.deathTime = enemyDeathTime;
-            controlScript.mainCamera = mainCamera;
-            controlScript.rollSpeed = Random.Range(minRollSpeed, maxRollSpeed);
-            controlScript.circumference = enemyCircumference;
-            controlScript.depthOffset = enemyRadius;
+                controlScript.depth = Random.value;
+                controlScript.depthScript = depthScript;
+                controlScript.deathTime = enemyDeathTime;
+                controlScript.mainCamera = mainCamera;
+                controlScript.rollSpeed = Random.Range(minRollSpeed, maxRollSpeed);
+                controlScript.circumference = enemyCircumference;
+                controlScript.depthOffset = enemyRadius;
+                controlScript.gameControl = mainControlScript;
 
-            // Activate enemy
-            newEnemy.SetActive(true);
+                // Activate enemy
+                newEnemy.SetActive(true);
+            }
         }
     }
 }

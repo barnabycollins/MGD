@@ -79,15 +79,23 @@ public class Player : MonoBehaviour
     }
 
     void LateUpdate() {
-        checkShoot();
-        checkCollisions();
+        if (gameControl.gameState == "running") {
+            checkShoot();
+            checkCollisions();
+        }
     }
 
     void MovePlayer() {
-        inputX = Input.GetAxis("Horizontal");
-        inputY = Input.GetAxis("Vertical");
+        
+        if (gameControl.gameState == "running") {
+            inputX = Input.GetAxis("Horizontal");
+            inputY = Input.GetAxis("Vertical");
 
-        jump = Input.GetAxis("Jump");
+            jump = Input.GetAxis("Jump");
+        }
+        else {
+            inputX = inputY = jump = 0.0f;
+        }
 
         float now = Time.time;
 
@@ -175,22 +183,18 @@ public class Player : MonoBehaviour
                         bool isAlive = gameControl.updateHealth(-2);
 
                         if (!isAlive) {
-                            endTime = Time.time;
-                            Debug.Log("dead ah jeez");
+                            endGame(false);
                         }
                     }
                 }
                 else if (enemy.name == "Glasses" && Mathf.Abs(enemyX - transform.position.x) < hitboxX) {
-                    endTime = Time.time;
-                    Debug.Log("EPIC WIN BRUDDA");
-
-                    Debug.Log(getStats()["timeTaken"]);
+                    endGame(true);
                 }
             }
         }
     }
 
-    public IDictionary<string, float> getStats() {
+    IDictionary<string, float> getStats() {
         IDictionary<string, float> dict = new Dictionary<string, float>(){
             {"weaponFires", (float) weaponFires},
             {"enemiesKilled", (float) enemiesKilled},
@@ -198,5 +202,13 @@ public class Player : MonoBehaviour
         };
 
         return dict;
+    }
+
+    void endGame(bool won) {
+        endTime = Time.time;
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isJumping", false);
+
+        gameControl.end(won, getStats());
     }
 }

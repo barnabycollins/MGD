@@ -13,10 +13,8 @@ public class EnemyControl : MonoBehaviour
 
     public Camera mainCamera;
 
-    public GameObject depthCoordinator;
-
     public float deathTime;
-    private ObjectDepth depthScript;
+    public ObjectDepth depthScript;
     private bool dead;
     private float timeOfDeath;
     private float spawnTime;
@@ -26,10 +24,10 @@ public class EnemyControl : MonoBehaviour
 
     private float worldEdgeMargin = 1;
 
+    public GameControlScript gameControl;
+
     // Start is called before the first frame update
     void Start() {
-        depthScript = depthCoordinator.GetComponent<ObjectDepth>();
-
         posY = depthScript.updateY(gameObject, depth) + depthOffset;
         initialX = mainCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x + worldEdgeMargin;
 
@@ -64,6 +62,10 @@ public class EnemyControl : MonoBehaviour
             transform.position = new Vector2(posX, posY);
 
             sprite.transform.localRotation = Quaternion.Euler(Vector3.forward * (initialX - posX) * 360 / circumference);
+        }
+
+        if (gameControl.gameState == "win" && !dead) {
+            Die();
         }
     }
 
