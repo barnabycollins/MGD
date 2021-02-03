@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
                 weaponFires += 1;
                 firingNow = true;
             }
-            else {
+            else if (firingNow) {
                 firingNow = false;
             }
         }
