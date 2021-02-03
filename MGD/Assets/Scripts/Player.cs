@@ -162,7 +162,7 @@ public class Player : MonoBehaviour
                 firingNow = false;
             }
         }
-        gameControl.updateFireCooldown(Mathf.Min(timeSinceFiring/fireCooldown));
+        gameControl.updateFireCooldown(Mathf.Min(timeSinceFiring/fireCooldown, 1.0f));
         laserBeam.SetActive(firingNow);
     }
 
@@ -208,6 +208,8 @@ public class Player : MonoBehaviour
         endTime = Time.time;
         animator.SetBool("isMoving", false);
         animator.SetBool("isJumping", false);
+        laserBeam.SetActive(false);
+        gameControl.updateFireCooldown(1.0f);
 
         gameControl.end(won, getStats());
     }

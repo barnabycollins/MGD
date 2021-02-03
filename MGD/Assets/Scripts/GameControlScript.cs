@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class GameControlScript : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class GameControlScript : MonoBehaviour
     public int playerHealth;
 
     public string gameState;
+
+    public GameObject endPanel;
+    public GameObject endMessage;
+    public GameObject topStatNameText;
+    public GameObject topStatValueText;
+    public GameObject[] statsTexts;
 
     // Start is called before the first frame update
     void Start()
@@ -70,11 +77,45 @@ public class GameControlScript : MonoBehaviour
     }
 
     public void end(bool won, IDictionary<string, float> stats) {
+        string message;
+
+        string topStatName;
+        float topStatValue;
+
         if (won) {
             gameState = "win";
+            message = "YOU WIN!";
+            topStatName = "Health left:";
+            topStatValue = 100.0f - playerHealth / 10;
         }
         else {
             gameState = "lose";
+            message = "YOU LOSE!";
+            topStatName = "Distance left:";
+            topStatValue = 100.0f - levelProgress * 100;
         }
+
+        endMessage.GetComponent<Text>().text = message;
+        topStatNameText.GetComponent<Text>().text = topStatName;
+        topStatValueText.GetComponent<Text>().text = String.Format("{0:00.0} %", topStatValue);
+        
+        string[] statsNames = new string[] {"timeTaken", "weaponFires", "enemiesKilled"};
+
+        for (int i = 0; i < statsNames.Length; i++) {
+            string statName = statsNames[i];
+
+            string toWrite;
+
+            if (statName == "timeTaken") {
+                toWrite = String.Format("{0:0.00} s", stats[statName]);
+            }
+            else {
+                toWrite = ((int) stats[statName]).ToString();
+            }
+
+            statsTexts[i].GetComponent<Text>().text = toWrite;
+        }
+
+        endPanel.SetActive(true);
     }
 }
