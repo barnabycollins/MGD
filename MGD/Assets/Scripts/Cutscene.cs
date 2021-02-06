@@ -20,6 +20,6 @@ public class Cutscene : MonoBehaviour
 
     IEnumerator sceneLoadingCoroutine() {
         yield return new WaitForSeconds(1);
-        SceneManager.LoadSceneAsync("MainScene");
+        SceneManager.LoadSceneAsync("Menu");
     }
 }
