@@ -60,3 +60,4 @@ MGD/crashlytics-build.properties
 
 *.mp4
 
+MGD/[Bb]uild*
