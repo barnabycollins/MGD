@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public float[] enemyLikelihoods;
+    private float[] enemyLikelihoods;
     public GameObject gameController;
     private GameControlScript mainControlScript;
 
@@ -35,6 +35,7 @@ public class EnemySpawner : MonoBehaviour
         enemyCircumference = 2 * Mathf.PI * enemyRadius;
         mainControlScript = gameController.GetComponent<GameControlScript>();
         depthScript = depthCoordinator.GetComponent<ObjectDepth>();
+        enemyLikelihoods = new float[] {0.01f, MenuControl.difficulty};
     }
 
     void FixedUpdate() {

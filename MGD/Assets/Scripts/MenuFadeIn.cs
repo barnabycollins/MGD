@@ -23,6 +23,10 @@ public class MenuFadeIn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        image.color = new Color(0, 0, 0, Mathf.Max(1 - (Time.time - startTime)*fadeMult, 0.0f));
+        float elapsed = Time.time - startTime;
+        image.color = new Color(0, 0, 0, Mathf.Max(1 - elapsed*fadeMult, 0.0f));
+        if (elapsed > fadeTime) {
+            gameObject.SetActive(false);
+        }
     }
 }

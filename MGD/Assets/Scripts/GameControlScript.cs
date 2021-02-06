@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameControlScript : MonoBehaviour
 {
@@ -117,5 +118,13 @@ public class GameControlScript : MonoBehaviour
         }
 
         endPanel.SetActive(true);
+    }
+
+    public void goToMenu() {
+        SceneManager.LoadSceneAsync("Menu");
+    }
+
+    public void resetScene() {
+        SceneManager.LoadSceneAsync("MainScene");
     }
 }
