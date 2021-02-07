@@ -1,0 +1,12 @@
+Laser sound: dklon, https://opengameart.org/content/laser-fire
+Laser graphic: netcake3, https://opengameart.org/content/laser-effect-sheet
+Player character: Orrin, https://assetstore.unity.com/packages/2d/characters/spaceman-180967
+Glasses: ClipArtMag, http://clipartmag.com/download-clipart-image#glasses-cartoon-21.png
+Sky: bart, https://opengameart.org/content/sky-backdrop (edited to repeat nicely)
+Virus: Muhammad Naufal Subhiansyah, https://www.pinclipart.com/pindetail/ibxJbiJ_coronavirus-image-by-muhammad-naufal-subhiansyah-from-coronavirus/ (edited to provide more variation)
+Font: 4th february, https://www.fontsquirrel.com/fonts/codename-coder-free-4f
+Barnard Castle image: hand-drawn, based on image from West Layton Manor website: https://westlaytonmanor.co.uk/things-to-do-around-richmond-in-yorkshire/
+Cutscene:
+- BBC News, https://youtu.be/7BUDNjYBu74
+- On Demand News, https://youtu.be/p4EAc0QFubs
+- SOUND Effects Public Domain, https://youtu.be/LcoUIrwuBtg
