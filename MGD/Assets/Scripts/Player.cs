@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private float inputX;
     private float inputY;
     private float jump;
+    private float lastFire;
 
     private bool isJumping;
     private bool facingRight;
@@ -149,11 +150,13 @@ public class Player : MonoBehaviour
     void checkShoot() {
         float fireInput = Input.GetAxis("Fire1");
 
+        Debug.Log(fireInput);
+
         float timeNow = Time.time;
         float timeSinceFiring = timeNow - lastFireTime;
         
         if (timeSinceFiring > shotLength) {
-            if (fireInput != 0.0f && timeSinceFiring > fireCooldown) {
+            if (fireInput != 0.0f && lastFire == 0.0f && timeSinceFiring > fireCooldown) {
                 lastFireTime = timeNow;
                 weaponFires += 1;
                 firingNow = true;
@@ -162,6 +165,9 @@ public class Player : MonoBehaviour
                 firingNow = false;
             }
         }
+
+        lastFire = fireInput;
+
         gameControl.updateFireCooldown(Mathf.Min(timeSinceFiring/fireCooldown, 1.0f));
         laserBeam.SetActive(firingNow);
     }

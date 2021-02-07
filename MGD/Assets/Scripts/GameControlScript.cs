@@ -87,7 +87,7 @@ public class GameControlScript : MonoBehaviour
             gameState = "win";
             message = "YOU WIN!";
             topStatName = "Health left:";
-            topStatValue = 100.0f - playerHealth / 10;
+            topStatValue = playerHealth / 10;
         }
         else {
             gameState = "lose";
