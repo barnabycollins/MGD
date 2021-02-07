@@ -150,8 +150,6 @@ public class Player : MonoBehaviour
     void checkShoot() {
         float fireInput = Input.GetAxis("Fire1");
 
-        Debug.Log(fireInput);
-
         float timeNow = Time.time;
         float timeSinceFiring = timeNow - lastFireTime;
         
